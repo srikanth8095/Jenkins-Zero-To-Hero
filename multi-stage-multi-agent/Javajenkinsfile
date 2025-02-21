@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+      }
+      steps {
+        sh 'mvn clean package'
+      }
+    }
+    stage('Test') {
+      agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+      }
+      steps {
+        sh 'mvn test'
+      }
+    }
+    stage('Deploy') {
+      agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+      }
+      steps {
+        sh 'mvn deploy'
+      }
+    }
+  }
+}
